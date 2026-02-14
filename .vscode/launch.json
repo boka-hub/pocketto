@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open Room App (port 8080)",
+            "url": "http://localhost:8080/room-app/",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open Room App (port 8000)",
+            "url": "http://localhost:8000/",
+            "webRoot": "${workspaceFolder}/room-app"
+        }
+    ]
+}

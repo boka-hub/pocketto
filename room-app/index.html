@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#FFF5F7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Your Room">
+    
+    <title>Your Room</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Rain overlay (hidden by default) -->
+    <div id="rain-overlay" class="rain-overlay hidden"></div>
+    
+    <!-- Main room container: fills viewport like a real room -->
+    <div id="room" class="room">
+        <!-- Back wall (top third) -->
+        <div class="room-wall">
+            <div id="window" class="window" role="button" tabindex="0">
+                <div class="window-frame">
+                    <div class="window-pane">
+                        <div id="window-sky" class="window-sky">
+                            <div id="shooting-star" class="shooting-star"></div>
+                        </div>
+                        <div id="window-message" class="window-message"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floor (rest of room) with baseboard -->
+        <div class="room-floor">
+            <!-- Left: bed against wall -->
+            <div id="bed" class="bed" role="button" tabindex="0">
+                <div class="bed-frame">
+                    <div class="pillow"></div>
+                    <div class="blanket"></div>
+                </div>
+            </div>
+
+            <!-- Center: character on floor -->
+            <div id="character" class="character" role="button" tabindex="0">
+                <div class="character-body">
+                    <div class="character-face">
+                        <div class="character-eye left"></div>
+                        <div class="character-eye right"></div>
+                        <div class="character-mouth"></div>
+                    </div>
+                </div>
+                <div id="character-message" class="character-message"></div>
+                <div id="hug-effect" class="hug-effect"></div>
+            </div>
+
+            <!-- Right: shelf surface with music player and jar -->
+            <div class="room-shelf room-shelf-right">
+                <div id="music-player" class="music-player" role="button" tabindex="0">
+                    <div class="player-body">
+                        <div class="player-screen">
+                            <div class="music-note">♪</div>
+                        </div>
+                    </div>
+                    <div id="music-message" class="music-message"></div>
+                </div>
+                <div id="jar" class="jar" role="button" tabindex="0">
+                    <div class="jar-body">
+                        <div class="jar-lid"></div>
+                        <div class="jar-glass">
+                            <div class="paper-note"></div>
+                            <div class="paper-note"></div>
+                        </div>
+                    </div>
+                    <div id="jar-message" class="jar-message"></div>
+                </div>
+            </div>
+
+            <!-- Diary on floor (center-left) -->
+            <div id="diary" class="diary" role="button" tabindex="0">
+                <div class="diary-cover">
+                    <div class="diary-title">diary</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sparkle effects container -->
+        <div id="sparkles" class="sparkles-container"></div>
+    </div>
+
+    <!-- Comfort Mode Overlay -->
+    <div id="comfort-mode" class="comfort-mode hidden">
+        <button id="comfort-close" class="comfort-close">×</button>
+        <div id="comfort-text" class="comfort-text"></div>
+    </div>
+
+    <!-- Diary Modal -->
+    <div id="diary-modal" class="diary-modal hidden">
+        <div class="diary-modal-content">
+            <button id="diary-close" class="diary-close">×</button>
+            <h2 class="diary-heading">what's on your mind?</h2>
+            <textarea id="diary-input" class="diary-input" placeholder="write whatever you want..."></textarea>
+            <button id="diary-save" class="diary-save">save</button>
+            <div id="diary-response" class="diary-response"></div>
+            <div id="diary-entries" class="diary-entries"></div>
+        </div>
+    </div>
+
+    <!-- Note Display -->
+    <div id="note-display" class="note-display hidden">
+        <div class="note-paper">
+            <div id="note-content" class="note-content"></div>
+            <button id="note-close" class="note-close">close</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Register service worker only on secure context (https or localhost); skip for file://
+        var isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        if (isSecure && 'serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(function(reg) { console.log('Service Worker registered'); })
+                .catch(function(err) { console.log('Service Worker registration failed', err); });
+        }
+    </script>
+</body>
+</html>
